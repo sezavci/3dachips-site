@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5ef">
+  <meta name="description" content="3DA chips is building EDA tools for 3D integrated circuits. Starting with thermal simulation, designed for hardware acceleration, and expanding toward an end-to-end physics-driven design platform.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="3DA chips — The next dimension of chip design">
+  <meta property="og:description" content="EDA built for stacked silicon. Thermal simulation today. A broader world of physics ahead.">
+  <title>3DA chips — The next dimension of chip design</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%231e2929'/%3E%3Cg fill='none' stroke='%23ff724b' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='m10 22 22-12 22 12-22 12z'/%3E%3Cpath d='m10 32 22 12 22-12M10 43l22 12 22-12'/%3E%3C/g%3E%3C/svg%3E">
+  <style>
+    :root {
+      --paper: #f6f5ef;
+      --ink: #1e2929;
+      --muted: #616963;
+      --line: #d5d9cf;
+      --accent: #ec5c35;
+      --accent-light: #ff8960;
+      --panel: #ebede4;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: "Helvetica Neue", Arial, sans-serif;
+      --max: 1320px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    ::selection { background: #ffb097; color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+    button { cursor: pointer; }
+    svg { display: block; }
+    .wrap { width: min(var(--max), calc(100% - 112px)); margin-inline: auto; }
+    .eyebrow { font: 11px/1.5 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
+    .skip-link { position: fixed; left: 16px; top: -100px; z-index: 100; padding: 14px 20px; color: var(--paper); background: var(--ink); }
+    .skip-link:focus { top: 16px; }
+    .site-header { border-bottom: 1px solid var(--line); position: relative; z-index: 10; }
+    .header-inner { min-height: 94px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .wordmark { display: inline-flex; align-items: center; gap: 13px; flex-shrink: 0; }
+    .brand-symbol { width: 37px; height: 42px; }
+    .brand-type { display: flex; align-items: baseline; gap: 7px; }
+    .brand-type strong { font-size: 31px; font-weight: 800; letter-spacing: -.065em; }
+    .brand-type span { font-size: 18px; letter-spacing: -.03em; }
+    .desktop-nav { display: flex; align-items: center; gap: 35px; }
+    .desktop-nav > a:not(.button) { font-size: 13px; padding: 13px 0; position: relative; }
+    .desktop-nav > a:not(.button)::after { content: ""; position: absolute; bottom: 7px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width .2s ease; }
+    .desktop-nav > a:not(.button):hover::after { width: 100%; }
+    .button { min-height: 48px; display: inline-flex; justify-content: center; align-items: center; gap: 12px; padding: 15px 22px; background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 600; border: 1px solid var(--ink); transition: background .2s ease, color .2s ease, transform .2s ease; }
+    .button:hover { background: #344341; transform: translateY(-2px); }
+    .button-accent { color: var(--paper); background: var(--accent); border-color: var(--accent); }
+    .button-accent:hover { background: #d84b24; }
+    .button-plain { color: var(--ink); border-color: var(--line); background: transparent; }
+    .button-plain:hover { color: var(--ink); background: #e8eadf; }
+    .mobile-nav { display: none; }
+    .hero { padding-top: 66px; }
+    .hero-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 34px; }
+    .hero-topline .eyebrow { color: var(--muted); }
+    .hero-topline .hero-tag { display: inline-flex; gap: 10px; align-items: center; }
+    .hero-tag::before { content: ""; display: block; width: 7px; height: 7px; background: var(--accent); }
+    .hero-grid { display: grid; grid-template-columns: 1.03fr 1fr; gap: 34px; align-items: center; }
+    .hero-copy { padding-bottom: 22px; position: relative; z-index: 1; }
+    h1 { font-size: clamp(58px, 6.8vw, 98px); font-weight: 500; letter-spacing: -.072em; line-height: .99; margin: 8px 0 28px; }
+    h1 em { font-style: normal; color: var(--accent); }
+    .hero-description { max-width: 460px; font-size: 17px; line-height: 1.7; color: var(--muted); margin: 0 0 28px; }
+    .hero-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .hero-note { margin: 22px 0 0; font: 10px/1.6 var(--mono); letter-spacing: .03em; color: var(--muted); }
+    .hero-visual { margin: 0; min-width: 0; position: relative; }
+    .visual-frame { background: var(--panel); border: 1px solid #dfe2d6; overflow: hidden; position: relative; }
+    .visual-heading { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px 0; color: #5e6963; }
+    .visual-heading .eyebrow { font-size: 9px; }
+    .view-toggle { display: inline-flex; padding: 3px; border: 1px solid #d0d5c7; gap: 3px; }
+    .view-toggle button { border: 0; background: transparent; color: #5e6963; font: 10px/1 var(--mono); padding: 11px 12px; min-height: 36px; }
+    .view-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+    .view-toggle button:hover:not([aria-pressed="true"]) { background: #dce0d1; }
+    .chip-diagram { width: 100%; height: auto; aspect-ratio: 640 / 495; }
+    .chip-diagram .die { transition: transform .65s cubic-bezier(.2,.7,.25,1); }
+    .chip-diagram.is-separated #die-top { transform: translateY(-35px); }
+    .chip-diagram.is-separated #die-middle { transform: translateY(-3px); }
+    .chip-diagram.is-separated #die-bottom { transform: translateY(30px); }
+    .chip-diagram.is-separated #via-lines { opacity: .65; }
+    .chip-diagram #via-lines { opacity: .18; transition: opacity .5s ease; }
+    .chip-diagram .thermal-cell { transition: fill .5s ease, opacity .5s ease; }
+    .chip-diagram.is-structure .thermal-cell { fill: #344942 !important; opacity: .72; }
+    .chip-diagram.is-structure .heat-line { opacity: 0; }
+    .heat-line { transition: opacity .4s ease; }
+    .visual-bottom { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 0 22px 21px; font: 9px/1.5 var(--mono); color: #647166; }
+    .legend { display: flex; align-items: center; gap: 8px; }
+    .legend-scale { width: 62px; height: 5px; background: linear-gradient(90deg, #385449, #b4bb74, #f29950, #f15c35); }
+    .expand-button { border: 1px solid #ccd2c3; padding: 9px 11px; background: transparent; color: var(--ink); font: 10px/1.4 var(--mono); min-height: 36px; }
+    .expand-button:hover { background: #dbe0d0; }
+    .expand-button[aria-pressed="true"] { border-color: #98a58e; background: #dbe0d0; }
+    .diagram-caption { display: flex; justify-content: space-between; gap: 20px; padding: 12px 0 0; color: var(--muted); font: 9px/1.6 var(--mono); }
+    .hero-footer { display: grid; grid-template-columns: 1.03fr 1fr; gap: 34px; border-top: 1px solid var(--line); margin-top: 54px; padding: 24px 0 27px; align-items: center; }
+    .hero-footer > p { margin: 0; font: 10px/1.5 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .focus-areas { display: flex; justify-content: space-between; gap: 20px; font-size: 13px; }
+    .focus-areas span { display: flex; align-items: center; gap: 9px; }
+    .focus-areas span::before { content: "+"; color: var(--accent); font: 17px/1 var(--mono); }
+    .section-intro { display: grid; grid-template-columns: 1.03fr 1fr; gap: 34px; padding: 80px 0 65px; border-top: 1px solid var(--line); }
+    .section-kicker { display: flex; gap: 16px; align-items: baseline; color: var(--muted); }
+    .section-kicker span:first-child { color: var(--accent); }
+    h2 { margin: 23px 0 0; font-size: clamp(35px, 4vw, 56px); line-height: 1.06; font-weight: 500; letter-spacing: -.052em; }
+    .section-intro > p { align-self: end; max-width: 485px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.8; }
+    .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+    .pillar { padding: 35px 35px 38px 0; }
+    .pillar + .pillar { border-left: 1px solid var(--line); padding-left: 35px; }
+    .pillar-top { display: flex; justify-content: space-between; align-items: center; gap: 15px; min-height: 52px; }
+    .pillar-icon { width: 42px; height: 42px; color: var(--ink); }
+    .pillar-state { font: 9px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 5px 7px; border: 1px solid var(--line); }
+    .pillar h3 { font-size: 23px; font-weight: 500; letter-spacing: -.04em; margin: 28px 0 14px; }
+    .pillar p { font-size: 14px; line-height: 1.85; color: var(--muted); margin: 0; }
+    .pillar-foot { margin-top: 25px; font: 9px/1.6 var(--mono); text-transform: uppercase; letter-spacing: .07em; color: #526353; }
+    .approach { margin-top: 94px; padding: 73px 0 69px; background: var(--ink); color: var(--paper); }
+    .approach .section-kicker { color: #a3afa2; }
+    .approach .section-kicker span:first-child { color: var(--accent-light); }
+    .approach-intro { display: grid; grid-template-columns: 1.03fr 1fr; gap: 34px; align-items: end; }
+    .approach-intro h2 { max-width: 620px; }
+    .approach-intro > p { font-size: 16px; color: #b3beb4; line-height: 1.8; max-width: 440px; margin: 0 0 3px; }
+    .workflow { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 58px; border-top: 1px solid #4b5650; }
+    .workflow-step { padding: 25px 28px 0 0; position: relative; }
+    .workflow-step::before { content: ""; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; background: var(--accent-light); }
+    .workflow-step + .workflow-step { padding-left: 26px; border-left: 1px solid #34423c; }
+    .workflow-step + .workflow-step::before { left: 26px; }
+    .step-number { color: #8b9b8f; font: 10px/1.5 var(--mono); letter-spacing: .08em; }
+    .workflow-step h3 { margin: 17px 0 13px; font-weight: 400; font-size: 23px; letter-spacing: -.035em; }
+    .workflow-step p { font-size: 13px; line-height: 1.8; color: #aebbb0; margin: 0; max-width: 240px; }
+    .approach-bottom { display: flex; align-items: center; gap: 11px; color: #aebbb0; font: 9px/1.6 var(--mono); letter-spacing: .04em; margin-top: 45px; }
+    .approach-bottom::before { content: ""; display: block; width: 24px; height: 1px; background: var(--accent-light); }
+    .contact { padding: 90px 0 75px; display: grid; grid-template-columns: 1.03fr 1fr; gap: 34px; align-items: end; }
+    .contact h2 { font-size: clamp(44px, 5vw, 72px); max-width: 610px; }
+    .contact-copy { margin: 22px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; max-width: 440px; }
+    .contact-links { padding-bottom: 4px; }
+    .contact-person { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 15px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .contact-person:first-child { border-top: 1px solid var(--line); }
+    .contact-person span { font: 10px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .contact-person a { font-size: clamp(18px, 2.15vw, 29px); letter-spacing: -.035em; width: fit-content; padding: 3px 0; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 7px; transition: color .2s ease, text-decoration-color .2s ease; }
+    .contact-person a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    .contact-invite { color: var(--muted); font: 10px/1.7 var(--mono); margin: 19px 0 0; }
+    .site-footer { border-top: 1px solid var(--line); }
+    .footer-inner { padding: 27px 0 33px; display: flex; justify-content: space-between; align-items: center; gap: 25px; }
+    .footer-inner .brand-symbol { width: 25px; height: 29px; }
+    .footer-inner .brand-type strong { font-size: 22px; }
+    .footer-inner .brand-type span { font-size: 13px; }
+    .footer-note { font: 10px/1.7 var(--mono); color: var(--muted); text-align: right; }
+    .footer-note a { margin-left: 22px; text-underline-offset: 4px; }
+    .footer-note a:hover { text-decoration: underline; }
+    @media (min-width: 1600px) { .hero { padding-top: 80px; } .hero-grid { gap: 56px; } h1 { font-size: 108px; } }
+    @media (max-width: 1100px) {
+      .wrap { width: calc(100% - 64px); }
+      .desktop-nav { gap: 23px; }
+      .hero-grid, .hero-footer, .section-intro, .approach-intro, .contact { gap: 26px; }
+      .hero { padding-top: 45px; }
+      h1 { font-size: clamp(52px, 6.8vw, 82px); }
+      .hero-description { font-size: 15px; }
+      .visual-heading { padding: 14px 14px 0; }
+      .visual-bottom { padding: 0 14px 15px; }
+      .visual-heading > .eyebrow { font-size: 8px; }
+      .hero-actions .button { padding-inline: 16px; font-size: 12px; }
+      .focus-areas { gap: 12px; font-size: 11px; }
+      .pillar { padding-right: 24px; }
+      .pillar + .pillar { padding-left: 24px; }
+      .pillar h3 { font-size: 21px; }
+      .pillar-state { font-size: 8px; }
+      .workflow-step { padding-right: 18px; }
+      .workflow-step + .workflow-step { padding-left: 18px; }
+      .workflow-step + .workflow-step::before { left: 18px; }
+    }
+    @media (max-width: 760px) {
+      html { scroll-padding-top: 30px; }
+      .wrap { width: calc(100% - 40px); }
+      .header-inner { min-height: 78px; }
+      .desktop-nav { display: none; }
+      .mobile-nav { display: block; }
+      .mobile-nav summary { padding: 13px 14px; border: 1px solid var(--line); font: 11px/1.4 var(--mono); cursor: pointer; list-style: none; }
+      .mobile-nav summary::-webkit-details-marker { display: none; }
+      .mobile-nav summary::after { content: "+"; margin-left: 18px; font-size: 15px; }
+      .mobile-nav[open] summary::after { content: "−"; }
+      .mobile-nav nav { position: absolute; top: 77px; right: 20px; left: 20px; background: var(--paper); border: 1px solid var(--line); padding: 12px; box-shadow: 0 18px 28px #1e292911; }
+      .mobile-nav nav a { display: block; padding: 15px 12px; font-size: 14px; }
+      .hero { padding-top: 35px; }
+      .hero-topline { margin-bottom: 25px; }
+      .hero-topline .eyebrow { font-size: 9px; }
+      .hero-topline > .eyebrow:last-child { display: none; }
+      .hero-grid, .hero-footer, .section-intro, .approach-intro, .contact { grid-template-columns: 1fr; gap: 30px; }
+      h1 { font-size: clamp(53px, 11.3vw, 80px); letter-spacing: -.065em; line-height: 1.01; margin-top: 0; margin-bottom: 22px; }
+      .hero-description { font-size: 16px; max-width: 470px; margin-bottom: 23px; }
+      .hero-copy { padding-bottom: 0; }
+      .hero-actions .button { min-height: 48px; padding-inline: 20px; }
+      .hero-note { font-size: 9px; margin-top: 17px; }
+      .hero-visual { max-width: 560px; width: 100%; justify-self: center; }
+      .visual-heading { padding: 17px 17px 0; }
+      .visual-heading > .eyebrow { font-size: 9px; }
+      .visual-bottom { padding: 0 17px 18px; }
+      .view-toggle button { min-height: 40px; }
+      .expand-button { min-height: 40px; }
+      .diagram-caption { font-size: 8px; }
+      .hero-footer { margin-top: 36px; gap: 18px; padding-block: 23px; }
+      .focus-areas { justify-content: flex-start; gap: 25px; font-size: 12px; flex-wrap: wrap; }
+      .section-intro { padding: 54px 0 35px; gap: 24px; }
+      .section-intro h2 { font-size: clamp(35px, 7.5vw, 48px); }
+      .section-intro > p { font-size: 15px; max-width: 100%; }
+      .pillars { grid-template-columns: 1fr; }
+      .pillar, .pillar + .pillar { padding: 26px 0 29px; border-left: 0; }
+      .pillar + .pillar { border-top: 1px solid var(--line); }
+      .pillar h3 { margin-top: 14px; font-size: 25px; }
+      .pillar p { max-width: 560px; }
+      .pillar-foot { margin-top: 17px; }
+      .approach { margin-top: 52px; padding: 51px 0 47px; }
+      .approach-intro { gap: 25px; }
+      .approach-intro > p { font-size: 15px; }
+      .workflow { grid-template-columns: 1fr 1fr; margin-top: 39px; gap: 35px 0; }
+      .workflow-step { padding-right: 20px; }
+      .workflow-step + .workflow-step { padding-left: 0; border: 0; }
+      .workflow-step:nth-child(even) { padding-left: 22px; padding-right: 0; border-left: 1px solid #34423c; }
+      .workflow-step::before, .workflow-step + .workflow-step::before { left: 0; }
+      .workflow-step:nth-child(even)::before { left: 22px; }
+      .workflow-step:nth-child(n+3) { border-top: 1px solid #4b5650; }
+      .workflow-step h3 { font-size: 21px; }
+      .workflow-step p { font-size: 12px; }
+      .approach-bottom { margin-top: 29px; font-size: 8px; }
+      .contact { padding: 56px 0 45px; gap: 30px; }
+      .contact h2 { font-size: clamp(42px, 9.5vw, 64px); }
+      .contact-copy { font-size: 15px; max-width: 450px; }
+      .contact-person { grid-template-columns: 58px minmax(0, 1fr); gap: 10px; }
+      .contact-person a { font-size: clamp(20px, 5.5vw, 29px); }
+      .footer-inner { align-items: flex-start; padding-block: 24px; }
+      .footer-note { font-size: 8px; max-width: 160px; }
+      .footer-note a { display: block; margin: 8px 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    @media print {
+      .wrap { width: 100%; }
+      .desktop-nav, .mobile-nav, .hero-actions, .view-toggle, .expand-button { display: none; }
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .approach { background: #fff; color: #1e2929; border-block: 1px solid #999; }
+      .approach p, .approach .section-kicker, .step-number { color: #444; }
+      .pillar, .workflow-step, .contact { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="#top" aria-label="3DA chips home">
+        <svg class="brand-symbol" viewBox="0 0 40 44" fill="none" aria-hidden="true"><path d="m3 12 17-9 17 9-17 9zM3 22l17 9 17-9M3 32l17 9 17-9" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        <span class="brand-type"><strong>3DA</strong><span>chips</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#technology">Technology</a>
+        <a href="#approach">Our approach</a>
+        <a href="#contact" class="button">Start a conversation</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary>Menu</summary>
+        <nav aria-label="Mobile navigation"><a href="#technology">Technology</a><a href="#approach">Our approach</a><a href="#contact">Start a conversation</a></nav>
+      </details>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-topline"><span class="eyebrow hero-tag">Electronic design, in three dimensions</span><span class="eyebrow">Physics / Silicon / Compute</span></div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title">The next<br>dimension of<br><em>chip design.</em></h1>
+          <p class="hero-description">We’re building a new generation of EDA tools for 3D integrated circuits. Grounded in physics. Designed for hardware acceleration. Built from the ground up.</p>
+          <div class="hero-actions"><a class="button button-accent" href="#contact">Let’s talk</a><a class="button button-plain" href="#technology">Explore the technology</a></div>
+          <p class="hero-note">Starting with thermal simulation. Thinking beyond it.</p>
+        </div>
+        <figure class="hero-visual">
+          <div class="visual-frame">
+            <div class="visual-heading"><span class="eyebrow">Inside the stack / 001</span><div class="view-toggle" role="group" aria-label="Diagram view"><button type="button" id="structure-view" aria-pressed="false">Structure</button><button type="button" id="thermal-view" aria-pressed="true">Thermal</button></div></div>
+            <svg id="chip-diagram" class="chip-diagram" viewBox="0 0 640 495" role="img" aria-labelledby="diagram-title diagram-desc">
+              <title id="diagram-title">Three-dimensional chip stack with an illustrative thermal field</title>
+              <desc id="diagram-desc">An isometric schematic showing two stacked dies, vertical connections, and an interposer. Warm colors illustrate a conceptual heat distribution, not measured temperatures.</desc>
+              <defs>
+                <pattern id="drafting-grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#bdc5b5" opacity=".55"/></pattern>
+                <linearGradient id="die-side-left" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#253b35"/><stop offset="1" stop-color="#152b25"/></linearGradient>
+                <linearGradient id="die-side-right" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#415347"/><stop offset="1" stop-color="#2c3f35"/></linearGradient>
+                <linearGradient id="static-heat" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#394f44"/><stop offset=".52" stop-color="#d0ba73"/><stop offset=".76" stop-color="#ed7f45"/><stop offset="1" stop-color="#c95d37"/></linearGradient>
+              </defs>
+              <rect x="20" y="20" width="600" height="442" fill="url(#drafting-grid)"/>
+              <g fill="none" stroke="#bac2b0" stroke-width="1"><path d="M36 101v-15h15M589 86h15v15M36 407v15h15M589 422h15v-15"/></g>
+              <g fill="none" stroke="#cbd0bf" stroke-width=".8"><path d="m80 377 240-117 240 117-240 117zM140 348l240 117M200 319l240 117M260 290l240 117M140 406l240-117M200 435l240-117M260 464l240-117"/></g>
+              <g id="via-lines" fill="none" stroke="#79895a" stroke-width="1" stroke-dasharray="3 4"><path d="M200 210v125M270 172v125M370 172v125M440 210v125M270 248v125M370 248v125"/></g>
+              <g id="die-bottom" class="die"><path d="m112 336 208-95 208 95v19l-208 95-208-95z" fill="#455548"/><path d="m112 336 208 95 208-95-208-95z" fill="#72856d" stroke="#213e30"/><path d="m164 336 156-71 156 71-156 71z" fill="none" stroke="#a2b28e"/></g>
+              <g id="die-middle" class="die"><path d="m143 264 177-81 177 81v18l-177 81-177-81z" fill="#21382f"/><path d="m143 264 177 81 177-81-177-81z" fill="#506849" stroke="#213e30"/></g>
+              <g id="die-top" class="die"><path d="m143 192 177-81 177 81v18l-177 81-177-81z" fill="#20332d"/><path class="thermal-cell" d="m143 192 177 81 177-81-177-81z" fill="url(#static-heat)" stroke="#213e30"/></g>
+              <g id="diagram-annotations" fill="none" stroke="#809079" stroke-width=".8"><path d="M466 191h66l17-17M462 283h65l17 17M451 393h78l15 17"/></g>
+              <g font-family="monospace" font-size="8" fill="#56674f"><text x="494" y="164">COMPUTE DIE</text><text x="496" y="315">STACKED DIE</text><text x="494" y="426">INTERPOSER</text><text x="43" y="448" font-size="9">X</text><text x="77" y="474" font-size="9">Y</text><text x="42" y="410" font-size="9">Z</text></g>
+              <g fill="none" stroke="#6f8066" stroke-width="1"><path d="M56 448v-27M56 448l-18-9M56 448l19 10"/></g>
+            </svg>
+            <div class="visual-bottom"><div class="legend"><span>Cooler</span><span class="legend-scale" aria-hidden="true"></span><span>Warmer</span></div><button type="button" class="expand-button" id="expand-stack" aria-pressed="false">Separate layers</button></div>
+          </div>
+          <figcaption class="diagram-caption"><span>Conceptual stack · Illustrative thermal field</span><span>3DA chips / Research &amp; development</span></figcaption>
+        </figure>
+      </div>
+      <div class="hero-footer"><p>Built around the challenges of stacked silicon</p><div class="focus-areas"><span>3D integration</span><span>Chiplets</span><span>Advanced packaging</span></div></div>
+    </section>
+    <section class="technology wrap" id="technology" aria-labelledby="technology-title">
+      <div class="section-intro"><div><div class="section-kicker eyebrow"><span>01</span><span>What we’re building</span></div><h2 id="technology-title">More dimensions.<br>Deeper understanding.</h2></div><p>Our starting point is heat: how it moves through a stack, across materials, and between dies. Our ambition is broader—a connected set of physics tools that helps engineers make better decisions throughout the design process.</p></div>
+      <div class="pillars">
+        <article class="pillar"><div class="pillar-top"><svg class="pillar-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M8 34h32M13 27c-6-5 6-7 0-13M24 27c-6-5 6-7 0-13M35 27c-6-5 6-7 0-13" stroke="currentColor" stroke-width="1.5"/><path d="M8 39h32" stroke="#ec5c35" stroke-width="1.5"/></svg><span class="pillar-state">Our starting point</span></div><h3>Thermal, first.</h3><p>GPU thermal simulation for the structures that make 3D ICs possible. We study heat flow through stacked layers, material interfaces, and vertical interconnects to inform design choices.</p><div class="pillar-foot">Heat flow / Materials / Interfaces</div></article>
+        <article class="pillar"><div class="pillar-top"><svg class="pillar-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="11" y="11" width="26" height="26" stroke="currentColor" stroke-width="1.5"/><path d="M18 5v6M24 5v6M30 5v6M18 37v6M24 37v6M30 37v6M5 18h6M5 24h6M5 30h6M37 18h6M37 24h6M37 30h6" stroke="currentColor" stroke-width="1.5"/><path d="M18 18h5v5h-5zM26 18h5v5h-5zM18 26h5v5h-5zM26 26h5v5h-5z" fill="#ec5c35"/></svg><span class="pillar-state">Our foundation</span></div><h3>Acceleration, by design.</h3><p>We’re writing EDA tools from scratch for GPUs and other hardware accelerators. Algorithms, data structures, and workflows are designed around the hardware from the outset.</p><div class="pillar-foot">Parallel compute / Purpose-built tools</div></article>
+        <article class="pillar"><div class="pillar-top"><svg class="pillar-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="12" cy="13" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="36" cy="13" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="35" r="5" stroke="#ec5c35" stroke-width="1.5"/><path d="M17 13h14M14.5 17.5 21.5 30.5M33.5 17.5 26.5 30.5" stroke="currentColor" stroke-width="1.5"/></svg><span class="pillar-state">Our direction</span></div><h3>More physics, connected.</h3><p>We’re working to extend our thermal expertise into other physical domains. The goal is an end-to-end design and verification platform that brings those perspectives together.</p><div class="pillar-foot">Research expansion / Coupled physics</div></article>
+      </div>
+    </section>
+    <section class="approach" id="approach" aria-labelledby="approach-title"><div class="wrap">
+      <div class="approach-intro"><div><div class="section-kicker eyebrow"><span>02</span><span>Our approach</span></div><h2 id="approach-title">From physical insight<br>to engineering tools.</h2></div><p>Research guides what we build. Measurement guides what we improve. We connect physical models, modern compute, and engineering validation in one development process.</p></div>
+      <div class="workflow"><article class="workflow-step"><span class="step-number">01 / RESEARCH</span><h3>Understand the physics.</h3><p>Study research papers, technical documentation, and design specifications to define the right problems.</p></article><article class="workflow-step"><span class="step-number">02 / ENGINEER</span><h3>Build for the hardware.</h3><p>Turn physical models into algorithms and tools designed for parallel computation.</p></article><article class="workflow-step"><span class="step-number">03 / VALIDATE</span><h3>Make the evidence count.</h3><p>Check implementations against numerical tests and reference data. Measure accuracy and computational cost together.</p></article><article class="workflow-step"><span class="step-number">04 / EXPAND</span><h3>Connect more domains.</h3><p>Use what we learn to refine our tools and extend the platform beyond thermal simulation.</p></article></div>
+      <p class="approach-bottom">A growing toolset. A consistent foundation in physics.</p>
+    </div></section>
+    <section class="contact wrap" id="contact" aria-labelledby="contact-title"><div><div class="section-kicker eyebrow"><span>03</span><span>Let’s build what’s next</span></div><h2 id="contact-title">Working on the<br>next stack?</h2><p class="contact-copy">We’d like to hear about your design challenges, research ideas, and the tools you wish existed.</p></div><div class="contact-links"><div class="contact-person"><span>Sezai</span><a href="mailto:sezai@3dachips.com?subject=Let%27s%20talk%20about%203DA%20chips">sezai@3dachips.com</a></div><div class="contact-person"><span>Eda</span><a href="mailto:eda@3dachips.com?subject=Let%27s%20talk%20about%203DA%20chips">eda@3dachips.com</a></div><p class="contact-invite">For engineering conversations, research, and collaboration.</p></div></section>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-inner"><a class="wordmark" href="#top" aria-label="3DA chips, back to top"><svg class="brand-symbol" viewBox="0 0 40 44" fill="none" aria-hidden="true"><path d="m3 12 17-9 17 9-17 9zM3 22l17 9 17-9M3 32l17 9 17-9" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg><span class="brand-type"><strong>3DA</strong><span>chips</span></span></a><div class="footer-note">© <span id="copyright-year">2026</span> 3DA chips.<a href="#top">Back to top</a></div></div></footer>
+  <script>
+    (() => {
+      "use strict";
+      const NS = "http://www.w3.org/2000/svg";
+      const diagram = document.getElementById("chip-diagram");
+      const create = (tag, attributes = {}) => {
+        const node = document.createElementNS(NS, tag);
+        for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, String(value));
+        return node;
+      };
+      const point = (u, v, y) => [320 + (u - v) * 1.17, y + (u + v) * .54];
+      const poly = points => points.map(p => p.map(n => n.toFixed(2)).join(",")).join(" ");
+      const palette = [[.0, [49, 76, 61]], [.25, [103, 127, 82]], [.50, [178, 182, 105]], [.70, [231, 164, 82]], [.86, [243, 116, 57]], [1, [227, 72, 40]]];
+      function thermalColor(t) {
+        t = Math.max(0, Math.min(1, t));
+        for (let i = 1; i < palette.length; i++) {
+          if (t <= palette[i][0]) {
+            const [p0, c0] = palette[i - 1], [p1, c1] = palette[i];
+            const f = (t - p0) / (p1 - p0);
+            return `rgb(${c0.map((v, j) => Math.round(v + (c1[j] - v) * f)).join(",")})`;
+          }
+        }
+        return "rgb(227,72,40)";
+      }
+      function drawDie(id, y, halfSize, cells, heatStrength) {
+        const group = document.getElementById(id);
+        const corners = [[-halfSize, -halfSize], [halfSize, -halfSize], [halfSize, halfSize], [-halfSize, halfSize]].map(([u, v]) => point(u, v, y));
+        const bottom = corners.map(([x, yy]) => [x, yy + 16]);
+        group.replaceChildren();
+        group.append(create("polygon", {points: poly([corners[3], corners[2], bottom[2], bottom[3]]), fill: "url(#die-side-left)", stroke: "#1c332c", "stroke-width": .8}));
+        group.append(create("polygon", {points: poly([corners[2], corners[1], bottom[1], bottom[2]]), fill: "url(#die-side-right)", stroke: "#1c332c", "stroke-width": .8}));
+        group.append(create("polygon", {points: poly(corners), fill: "#314b3d", stroke: "#243c30", "stroke-width": 1.4}));
+        const margin = 6, step = (2 * halfSize - 2 * margin) / cells;
+        for (let i = 0; i < cells; i++) {
+          for (let j = 0; j < cells; j++) {
+            const u = -halfSize + margin + i * step, v = -halfSize + margin + j * step;
+            const gap = 1.05;
+            const px = i / (cells - 1), py = j / (cells - 1);
+            const hot = Math.exp(-(((px - .66) ** 2) / .11 + ((py - .36) ** 2) / .13));
+            const warm = .36 * Math.exp(-(((px - .23) ** 2) / .07 + ((py - .75) ** 2) / .11));
+            const heat = .13 + heatStrength * (.87 * hot + warm);
+            group.append(create("polygon", {class: "thermal-cell", points: poly([[u + gap, v + gap], [u + step - gap, v + gap], [u + step - gap, v + step - gap], [u + gap, v + step - gap]].map(([a, b]) => point(a, b, y))), fill: thermalColor(heat)}));
+          }
+        }
+        const half = halfSize * .60;
+        group.append(create("polygon", {points: poly([[-half, -half], [half, -half], [half, half], [-half, half]].map(([u, v]) => point(u, v, y))), fill: "none", stroke: "#eee6be", "stroke-opacity": .5, "stroke-width": .8}));
+        for (let i = 1; i < 14; i++) {
+          const p = [corners[3][0] + (corners[2][0] - corners[3][0]) * i / 14, corners[3][1] + (corners[2][1] - corners[3][1]) * i / 14];
+          group.append(create("line", {x1: p[0], y1: p[1] + 4, x2: p[0], y2: p[1] + 11, stroke: "#cdb37b", "stroke-width": 1.8, opacity: .66}));
+        }
+      }
+      drawDie("die-bottom", 336, 89, 12, .30);
+      drawDie("die-middle", 264, 76, 13, .57);
+      drawDie("die-top", 192, 76, 15, 1.02);
+      const structures = document.getElementById("structure-view");
+      const thermal = document.getElementById("thermal-view");
+      const legend = document.querySelector(".legend");
+      function setView(mode) {
+        const isStructure = mode === "structure";
+        diagram.classList.toggle("is-structure", isStructure);
+        structures.setAttribute("aria-pressed", String(isStructure));
+        thermal.setAttribute("aria-pressed", String(!isStructure));
+        legend.style.visibility = isStructure ? "hidden" : "visible";
+        document.getElementById("diagram-title").textContent = isStructure ? "Three-dimensional chip stack structure" : "Three-dimensional chip stack with an illustrative thermal field";
+      }
+      structures.addEventListener("click", () => setView("structure"));
+      thermal.addEventListener("click", () => setView("thermal"));
+      const expand = document.getElementById("expand-stack");
+      expand.addEventListener("click", () => {
+        const separated = diagram.classList.toggle("is-separated");
+        expand.setAttribute("aria-pressed", String(separated));
+        expand.textContent = separated ? "Bring layers together" : "Separate layers";
+      });
+      const mobileNav = document.querySelector(".mobile-nav");
+      mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => { mobileNav.open = false; }));
+      document.addEventListener("keydown", event => { if (event.key === "Escape") mobileNav.open = false; });
+      document.addEventListener("click", event => { if (!mobileNav.contains(event.target)) mobileNav.open = false; });
+      document.getElementById("copyright-year").textContent = String(new Date().getFullYear());
+    })();
+  </script>
+</body>
+</html>
